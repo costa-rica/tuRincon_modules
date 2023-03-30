@@ -73,7 +73,8 @@ class RinconsPosts(Base):
     user_id = Column(Integer, ForeignKey("users.id"), nullable = False)# TODO: create ForeignKey to users.id i.e. child to Users parent <--- DONE
     rincon_id = Column(Integer, ForeignKey("rincons.id"), nullable = False)# TODO: create ForeignKey to rincons.id i.e child to Rincons parent <--- DONE
     post_like = relationship("RinconsPostsLikes", backref="post_likes")# DONE
-    comments = relationship("RinconsPostsComments", backref="comments")# DONE:  
+    comments = relationship("RinconsPostsComments", backref="comments")# DONE: 
+    time_stamp_utc = Column(DateTime, nullable = False, default = datetime.utcnow) 
     
 
     def __repr__(self):
@@ -87,6 +88,7 @@ class RinconsPostsLikes(Base):
     post_id = Column(Integer, ForeignKey("rincons_posts.id"), primary_key=True)# TODO: create ForeignKey to RinconsPosts.id i.e. child to RinconsPosts parent
     user_id = Column(Integer, ForeignKey("users.id"), primary_key=True)# TODO: create ForeignKey to Users.id i.e.child to Users parent
     post_like = Column(Boolean, default=True)
+    time_stamp_utc = Column(DateTime, nullable = False, default = datetime.utcnow)
 
     def __repr__(self):
         return f'RinconsPostsLikes(user_id: {self.user_id}, post_id: {self.post_id},' \
@@ -100,7 +102,7 @@ class RinconsPostsComments(Base):
     user_id = Column(Integer, ForeignKey("users.id"), nullable = False)# TODO: create ForeignKey to Users.id i.e. child to Users parent <--- DONE
     text = Column(Text)
     image = Column(Text)# <-- should be lists
-    # posts =
+    time_stamp_utc = Column(DateTime, nullable = False, default = datetime.utcnow)
 
     def __repr__(self):
         return f'RinconsPostsComments(id: {self.id}, post_id: {self.post_id},' \
@@ -115,6 +117,7 @@ class RinconsPostsCommentsLikes(Base):
     comment_id = Column(Integer, ForeignKey("rincons_posts_comments.id"), primary_key = True)# TODO: create ForeignKey to RinconsPostsComments.id i.e. child to RinconsPostsComments parent
     user_id = Column(Integer, ForeignKey("users.id"), primary_key = True)# TODO: create ForeignKey to Users.id i.e. child to Users parent
     comment_like = Column(Boolean, default=True)
+    time_stamp_utc = Column(DateTime, nullable = False, default = datetime.utcnow)
 
     def __repr__(self):
         return f'RinconsPostsCommentsLikes(comment_id: {self.comment_id},' \
