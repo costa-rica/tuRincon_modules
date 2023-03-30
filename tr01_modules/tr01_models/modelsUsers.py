@@ -51,7 +51,7 @@ class Rincons(Base):
     name = Column(Text, nullable = False)
     key = Column(Text)
     manager_id = Column(Integer)#<-- User_id of a user that is manager
-
+    public = Column(Boolean, default=False)
     time_stamp_utc = Column(DateTime, nullable = False, default = datetime.utcnow)
     users = relationship("UsersToRincons", back_populates="rincon")
     # posts = relationship("RinconsToPosts", back_populates="rincon")
