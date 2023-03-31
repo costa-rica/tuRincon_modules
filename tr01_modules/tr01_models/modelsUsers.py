@@ -22,10 +22,10 @@ class Users(Base, UserMixin):
     username = Column(Text, default=default_username)
     time_stamp_utc = Column(DateTime, nullable = False, default = datetime.utcnow)
     rincons = relationship("UsersToRincons", back_populates="user")
-    posts = relationship('RinconsPosts', backref='posts_ref', lazy=True)
-    post_like = relationship('RinconsPostsLikes', backref='post_like_ref', lazy=True)
-    post_comment = relationship('RinconsPostsComments', backref='post_comment_ref', lazy=True)
-    post_comment_like = relationship('RinconsPostsCommentsLikes', backref='post_comment_like_ref', lazy=True)
+    posts = relationship('RinconsPosts', backref='posts_ref_users', lazy=True)
+    post_like = relationship('RinconsPostsLikes', backref='post_like_ref_users', lazy=True)
+    post_comment = relationship('RinconsPostsComments', backref='post_comment_ref_users', lazy=True)
+    post_comment_like = relationship('RinconsPostsCommentsLikes', backref='post_comment_like_ref_users', lazy=True)
 
     def get_reset_token(self, expires_sec=1800):
         s=Serializer(config.SECRET_KEY, expires_sec)
@@ -55,7 +55,10 @@ class Rincons(Base):
     time_stamp_utc = Column(DateTime, nullable = False, default = datetime.utcnow)
     users = relationship("UsersToRincons", back_populates="rincon")
     # posts = relationship("RinconsToPosts", back_populates="rincon")
-    posts = relationship('RinconsPosts', backref='posts', lazy=True)
+    posts = relationship('RinconsPosts', backref='posts_ref_rincons', lazy=True)
+    posts_likes = relationship('RinconsPostsLikes', backref='posts_likes_ref_rincons', lazy=True)
+    comments = relationship('RinconsPostsComments', backref='comments_ref_rincons', lazy=True)
+    comments_likes = relationship('RinconsPostsCommentsLikes', backref='comments_likes_ref_rincons', lazy=True)
 
     def __repr__(self):
         return f'RinconsTable(id: {self.id}, name: {self.name},' \
@@ -72,8 +75,8 @@ class RinconsPosts(Base):
     # rincons = relationship("RinconsToPosts", back_populates="post")
     user_id = Column(Integer, ForeignKey("users.id"), nullable = False)# TODO: create ForeignKey to users.id i.e. child to Users parent <--- DONE
     rincon_id = Column(Integer, ForeignKey("rincons.id"), nullable = False)# TODO: create ForeignKey to rincons.id i.e child to Rincons parent <--- DONE
-    post_like = relationship("RinconsPostsLikes", backref="post_likes")# DONE
-    comments = relationship("RinconsPostsComments", backref="comments")# DONE: 
+    post_like = relationship("RinconsPostsLikes", backref="post_likes_ref")# DONE
+    comments = relationship("RinconsPostsComments", backref="comments_ref")# DONE: 
     time_stamp_utc = Column(DateTime, nullable = False, default = datetime.utcnow) 
     
 
@@ -83,8 +86,8 @@ class RinconsPosts(Base):
 
 class RinconsPostsLikes(Base):
     __tablename__ = 'rincons_posts_likes'
-    # id = Column(Integer, primary_key = True)
-    #rincon_id = Column(Integer, nullable = False)
+    id = Column(Integer, primary_key = True)
+    rincon_id = Column(Integer, ForeignKey("rincons.id"), nullable = False)
     post_id = Column(Integer, ForeignKey("rincons_posts.id"), primary_key=True)# TODO: create ForeignKey to RinconsPosts.id i.e. child to RinconsPosts parent
     user_id = Column(Integer, ForeignKey("users.id"), primary_key=True)# TODO: create ForeignKey to Users.id i.e.child to Users parent
     post_like = Column(Boolean, default=True)
@@ -98,7 +101,7 @@ class RinconsPostsComments(Base):
     __tablename__ = 'rincons_posts_comments'
     id = Column(Integer, primary_key = True)
     post_id = Column(Integer, ForeignKey("rincons_posts.id"), nullable = False)# TODO: create ForeignKey to RinconsPosts.id i.e. child to RinconPosts parent <--- DONE
-    #rincon_id = Column(Integer, nullable = False)
+    rincon_id = Column(Integer, ForeignKey("rincons.id"), nullable = False)
     user_id = Column(Integer, ForeignKey("users.id"), nullable = False)# TODO: create ForeignKey to Users.id i.e. child to Users parent <--- DONE
     text = Column(Text)
     image = Column(Text)# <-- should be lists
@@ -110,10 +113,9 @@ class RinconsPostsComments(Base):
 
 class RinconsPostsCommentsLikes(Base):
     __tablename__ = 'rincons_posts_comments_likes'
-    # id = Column(Integer, primary_key = True)
-    # rincon_id = Column(Integer, nullable = False)
-    
-    # post_id = Column(Integer, nullable = False, primary_key = True)
+    id = Column(Integer, primary_key = True)
+    rincon_id = Column(Integer, ForeignKey("rincons.id"), nullable = False)
+    post_id = Column(Integer, ForeignKey("rincons_posts.id"), nullable = False)
     comment_id = Column(Integer, ForeignKey("rincons_posts_comments.id"), primary_key = True)# TODO: create ForeignKey to RinconsPostsComments.id i.e. child to RinconsPostsComments parent
     user_id = Column(Integer, ForeignKey("users.id"), primary_key = True)# TODO: create ForeignKey to Users.id i.e. child to Users parent
     comment_like = Column(Boolean, default=True)
