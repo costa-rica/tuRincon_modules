@@ -20,6 +20,7 @@ class Users(Base, UserMixin):
     email = Column(Text, unique = True, nullable = False)
     password = Column(Text, nullable = False)
     username = Column(Text, default=default_username)
+    admin = Column(Boolean, default=False)
     time_stamp_utc = Column(DateTime, nullable = False, default = datetime.utcnow)
     rincons = relationship("UsersToRincons", back_populates="user")
     posts = relationship('RinconsPosts', backref='posts_ref_users', lazy=True)
@@ -49,6 +50,7 @@ class Rincons(Base):
     __tablename__ = 'rincons'
     id = Column(Integer, primary_key = True)
     name = Column(Text, nullable = False)
+    name_no_spaces = Column(Text, nullable = False)
     key = Column(Text)
     manager_id = Column(Integer)#<-- User_id of a user that is manager
     public = Column(Boolean, default=False)
@@ -68,11 +70,9 @@ class Rincons(Base):
 class RinconsPosts(Base):
     __tablename__ = 'rincons_posts'
     id = Column(Integer, primary_key = True)
-    
-    
     text = Column(Text)
-    image = Column(Text)# <-- should be lists
-    # rincons = relationship("RinconsToPosts", back_populates="post")
+    image_file_name = Column(Text)# <-- should be lists
+    video_file_name = Column(Text)
     user_id = Column(Integer, ForeignKey("users.id"), nullable = False)# TODO: create ForeignKey to users.id i.e. child to Users parent <--- DONE
     rincon_id = Column(Integer, ForeignKey("rincons.id"), nullable = False)# TODO: create ForeignKey to rincons.id i.e child to Rincons parent <--- DONE
     post_like = relationship("RinconsPostsLikes", backref="post_likes_ref")# DONE

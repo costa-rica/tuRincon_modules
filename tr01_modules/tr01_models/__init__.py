@@ -11,6 +11,9 @@ import os
 if not os.path.exists(os.environ.get('DB_ROOT')):
     os.makedirs(os.environ.get('DB_ROOT'))
 
+# if not os.path.exists(os.path.join(os.environ.get('DB_ROOT'),"db_backup")):
+#     os.makedirs(os.path.join(os.environ.get('DB_ROOT'),"db_backup"))
+
 # if not os.path.exists(os.path.join(os.environ.get('DB_ROOT'),"df_files")):
 #     os.makedirs(os.path.join(os.environ.get('DB_ROOT'),"df_files"))
 
