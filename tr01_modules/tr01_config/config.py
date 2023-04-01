@@ -16,7 +16,16 @@ class ConfigBasic():
         self.DB_ROOT = os.environ.get('DB_ROOT')
         self.SQL_URI = f"sqlite:///{self.DB_ROOT}{os.environ.get('DB_NAME')}"
 
+        #Email stuff
+        self.MAIL_SERVER = env_dict.get('MAIL_SERVER_MSOFFICE')
+        self.MAIL_PORT = env_dict.get('MAIL_PORT')
+        self.MAIL_USE_TLS = True
+        self.MAIL_USERNAME = env_dict.get('EMAIL')
+        self.MAIL_PASSWORD = env_dict.get('EMAIL_PASSWORD')
 
+        #web Guest
+        self.GUEST_EMAIL = env_dict.get('GUEST_EMAIL')
+        self.GUEST_PASSWORD = env_dict.get('GUEST_PASSWORD')
 
 class ConfigLocal(ConfigBasic):
     
