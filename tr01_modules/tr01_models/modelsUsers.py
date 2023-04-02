@@ -104,7 +104,7 @@ class RinconsPostsComments(Base):
     rincon_id = Column(Integer, ForeignKey("rincons.id"), nullable = False)
     user_id = Column(Integer, ForeignKey("users.id"), nullable = False)# TODO: create ForeignKey to Users.id i.e. child to Users parent <--- DONE
     text = Column(Text)
-    image = Column(Text)# <-- should be lists
+    image_file_name = Column(Text)# <-- should be lists
     time_stamp_utc = Column(DateTime, nullable = False, default = datetime.utcnow)
 
     def __repr__(self):
@@ -135,6 +135,7 @@ class UsersToRincons(Base):
     users_table_id = Column(Integer, ForeignKey('users.id'), primary_key=True)
     rincons_table_id = Column(Integer, ForeignKey('rincons.id'), primary_key=True)
     permission = Column(Boolean)
+    time_stamp_utc = Column(DateTime, nullable = False, default = datetime.utcnow)
 
     rincon = relationship("Rincons", back_populates="users")
     user = relationship("Users", back_populates="rincons")
