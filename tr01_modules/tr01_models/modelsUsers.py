@@ -86,8 +86,9 @@ class RinconsPosts(Base):
 
 class RinconsPostsLikes(Base):
     __tablename__ = 'rincons_posts_likes'
-    id = Column(Integer, primary_key = True)
-    rincon_id = Column(Integer, ForeignKey("rincons.id"), nullable = False)
+    # id = Column(Integer, primary_key = True)
+    # rincon_id = Column(Integer, ForeignKey("rincons.id"), nullable = False)
+    rincon_id = Column(Integer, ForeignKey("rincons.id"), primary_key = True)
     post_id = Column(Integer, ForeignKey("rincons_posts.id"), primary_key=True)# TODO: create ForeignKey to RinconsPosts.id i.e. child to RinconsPosts parent
     user_id = Column(Integer, ForeignKey("users.id"), primary_key=True)# TODO: create ForeignKey to Users.id i.e.child to Users parent
     post_like = Column(Boolean, default=True)
