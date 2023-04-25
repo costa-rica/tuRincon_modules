@@ -70,7 +70,7 @@ class Rincons(Base):
 class RinconsPosts(Base):
     __tablename__ = 'rincons_posts'
     id = Column(Integer, primary_key = True)
-    text = Column(Text)
+    post_text = Column(Text)
     image_file_name = Column(Text)# <-- should be lists
     video_file_name = Column(Text)
     user_id = Column(Integer, ForeignKey("users.id"), nullable = False)# TODO: create ForeignKey to users.id i.e. child to Users parent <--- DONE
@@ -104,7 +104,7 @@ class RinconsPostsComments(Base):
     post_id = Column(Integer, ForeignKey("rincons_posts.id"), nullable = False)# TODO: create ForeignKey to RinconsPosts.id i.e. child to RinconPosts parent <--- DONE
     rincon_id = Column(Integer, ForeignKey("rincons.id"), nullable = False)
     user_id = Column(Integer, ForeignKey("users.id"), nullable = False)# TODO: create ForeignKey to Users.id i.e. child to Users parent <--- DONE
-    text = Column(Text)
+    comment_text = Column(Text)
     image_file_name = Column(Text)# <-- should be lists
     time_stamp_utc = Column(DateTime, nullable = False, default = datetime.utcnow)
 
