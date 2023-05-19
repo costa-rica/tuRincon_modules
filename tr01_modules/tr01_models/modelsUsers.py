@@ -135,7 +135,12 @@ class UsersToRincons(Base):
     __tablename__ = 'users_rincon'
     users_table_id = Column(Integer, ForeignKey('users.id'), primary_key=True)
     rincons_table_id = Column(Integer, ForeignKey('rincons.id'), primary_key=True)
-    permission = Column(Boolean)
+    # permission = Column(Boolean)
+    permission_view = Column(Boolean, default=True)
+    permission_like = Column(Boolean, default=False)
+    permission_comment = Column(Boolean, default=False)
+    permission_post = Column(Boolean, default=False)
+    permission_admin = Column(Boolean, default=False)
     time_stamp_utc = Column(DateTime, nullable = False, default = datetime.utcnow)
 
     rincon = relationship("Rincons", back_populates="users")
