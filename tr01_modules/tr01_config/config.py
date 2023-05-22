@@ -22,10 +22,14 @@ class ConfigBasic():
         self.MAIL_USE_TLS = True
         self.MAIL_USERNAME = env_dict.get('EMAIL')
         self.MAIL_PASSWORD = env_dict.get('EMAIL_PASSWORD')
+        self.EMAIL_DASH_AND_DATA = os.environ.get('EMAIL_DASH_AND_DATA')
 
         #web Guest
         self.GUEST_EMAIL = env_dict.get('GUEST_EMAIL')
         self.GUEST_PASSWORD = env_dict.get('GUEST_PASSWORD')
+
+        #API
+        self.API_URL = os.environ.get("API_URL")
 
 class ConfigLocal(ConfigBasic):
     
