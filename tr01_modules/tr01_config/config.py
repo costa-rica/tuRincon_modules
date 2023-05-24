@@ -31,6 +31,12 @@ class ConfigBasic():
         #API
         self.API_URL = os.environ.get("API_URL")
 
+        # back up database and file via scheduler
+        self.BACKER_UPPER_ROOT = os.environ.get("BACKER_UPPER_ROOT")
+        self.BACKUP_ROOT = os.environ.get("BACKUP_ROOT")
+
+        self.TR_VERIFICATION_PASSWORD = os.environ.get("TR_VERIFICATION_PASSWORD")
+
 class ConfigLocal(ConfigBasic):
     
     def __init__(self):
