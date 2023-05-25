@@ -82,7 +82,7 @@ class RinconsPosts(Base):
 
     def __repr__(self):
         return f'RinconsPosts(id: {self.id}, rincon_id: {self.rincon_id},' \
-        f'user_id: {self.user_id}, text: {self.text})'
+        f'user_id: {self.user_id}, post_text: {self.post_text})'
 
 class RinconsPostsLikes(Base):
     __tablename__ = 'rincons_posts_likes'
@@ -110,7 +110,7 @@ class RinconsPostsComments(Base):
 
     def __repr__(self):
         return f'RinconsPostsComments(id: {self.id}, post_id: {self.post_id},' \
-        f'user_id: {self.user_id}, text: {self.text})'
+        f'user_id: {self.user_id}, comment_text: {self.comment_text})'
 
 class RinconsPostsCommentsLikes(Base):
     __tablename__ = 'rincons_posts_comments_likes'
