@@ -13,7 +13,6 @@ def default_username(context):
     return context.get_current_parameters()['email'].split('@')[0]
 
 
-
 class Users(Base, UserMixin):
     __tablename__ = 'users'
     id = Column(Integer, primary_key = True)
