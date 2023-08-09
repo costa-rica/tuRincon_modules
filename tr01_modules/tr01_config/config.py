@@ -35,7 +35,7 @@ class ConfigBasic():
         self.BACKER_UPPER_ROOT = os.environ.get("BACKER_UPPER_ROOT")
         self.BACKUP_ROOT = os.environ.get("BACKUP_ROOT")
 
-        self.TR_VERIFICATION_PASSWORD = os.environ.get("TR_VERIFICATION_PASSWORD")
+        self.TR_VERIFICATION_PASSWORD = env_dict.get("TR_VERIFICATION_PASSWORD")
 
 class ConfigLocal(ConfigBasic):
     
