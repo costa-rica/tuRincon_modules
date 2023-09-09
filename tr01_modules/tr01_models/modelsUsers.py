@@ -52,6 +52,8 @@ class Rincons(Base):
     name_no_spaces = Column(Text, nullable = False)
     key = Column(Text)
     manager_id = Column(Integer)#<-- User_id of a user that is manager
+    # manager_id should be removed. confusing and not being used.
+    # all rincon admin associated with users is in UserToRincon assoc table.
     public = Column(Boolean, default=False)
     time_stamp_utc = Column(DateTime, nullable = False, default = datetime.utcnow)
     users = relationship("UsersToRincons", back_populates="rincon")
